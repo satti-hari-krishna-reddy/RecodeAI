@@ -10,7 +10,9 @@ To simplify and enhance your testing experience for **Recode AI**, we have imple
 
 2. **Temporary API Key**: To streamline the process, especially for the AI-enhanced code improvement features, we have included a **temporary API key** within the project. This ensures that you do not need to provide your own API key during the testing phase.
 
-3. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide.
+3. **Demo**: A demo binary executable (.exe) is already included, allowing you to test it without needing to provide one. You can select the file in the UI to perform the test.
+
+4. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide.
 
 By providing these features, we aim to make the testing process as smooth, efficient, and enjoyable as possible. Thank you for evaluating **Recode AI**!
 
@@ -76,7 +78,7 @@ By utilizing Azure to its fullest, Recode AI provides a cost-effective, high-per
 3. Navigate to the project directory and start the services:  
    ```bash
    cd RecodeAI
-   
+
    docker-compose up -d
    ```
 
