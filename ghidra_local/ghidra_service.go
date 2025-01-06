@@ -114,17 +114,10 @@ func decompileHandler(w http.ResponseWriter, r *http.Request) {
 	Prompt := "Generate a **function relationship map** for the given code with: \n 1. Function Name \n2. Variables: List with brief roles. \n 3. Return Value: What it returns and why. \n 4. Relationships:  Variable/function interactions (e.g., calls, return usage). \n **Rules**: No code modifications. \n then give some space in the bottom and in the next follow this by adding  inline comments or documentation for the following code. The comments should describe the purpose of each block of code or important lines. Do not modify the original structure or indentation of the code in any way. The goal is to improve understanding without altering the actual code.Please focus only on the code without any commentary "
     aiInput := Prompt + "\n" + string(decompiledCode)
 	aiResponse, err := InvokeAi(aiInput)
-	if err != nil {
-		response := fmt.Sprintf(`{"success": false, "message": "AI invocation failed", "decompiled_code": "// AI invocation failed\n%s"}`, decompiledCode)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(response))
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
+	
+	w.Header().Set("Content-Type", "text/plain")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf(`{"success": true, "message": "Decompilation successful", "decompiled_code": "%s"}`, aiResponse)))
+	w.Write([]byte(aiResponse))	
 }
 
 func InvokeAi(prompt string) (string, error) {
@@ -194,17 +187,32 @@ func TranslationHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Parse JSON body
+	// Ensure the Content-Type is text/plain
+	if r.Header.Get("Content-Type") != "text/plain" {
+		http.Error(w, "Invalid Content-Type, expected text/plain", http.StatusBadRequest)
+		return
+	}
+
+	// Read the body as plain text
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "Failed to read request body", http.StatusInternalServerError)
+		return
+	}
+
+	// Attempt to parse the stringified JSON
 	var requestBody struct {
 		PseudoCode string `json:"pseudo_code"`
 		Method     string `json:"method"`
 		Lang       string `json:"lang"`
 	}
-	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
-		http.Error(w, "Invalid JSON body", http.StatusBadRequest)
+
+	if err := json.Unmarshal(body, &requestBody); err != nil {
+		http.Error(w, "Invalid JSON format in body", http.StatusBadRequest)
 		return
 	}
 
+	// Validate required fields
 	if requestBody.PseudoCode == "" || requestBody.Method == "" {
 		http.Error(w, "Missing required fields: pseudo_code or method", http.StatusBadRequest)
 		return
@@ -230,20 +238,14 @@ func TranslationHandler(w http.ResponseWriter, r *http.Request) {
 
 	aiInput := prompt + "\n" + requestBody.PseudoCode
 
-	aiResponse, err := InvokeAi(aiInput)
-	if err != nil {
-		response := fmt.Sprintf(`{"success": false, "message": "AI invocation failed", "decompiled_code": "// AI invocation failed\n%s"}`, requestBody.PseudoCode)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(response))
-		return
-	}
+	aiResponse, _ := InvokeAi(aiInput)
 
-	response := fmt.Sprintf(`{"success": true, "message": "Decompilation successful", "decompiled_code": "%s"}`, aiResponse)
-	w.Header().Set("Content-Type", "application/json")
+	// Respond with plain text
+	w.Header().Set("Content-Type", "text/plain")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(response))
+	w.Write([]byte(aiResponse))
 }
+
 
 func main() {
 	// Create the router
