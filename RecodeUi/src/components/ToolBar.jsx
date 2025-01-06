@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem, CircularProgress, Snackbar, Alert } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-const ToolBar = ({ result, setResult, setLanguage }) => {
+const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
     const [demoAnchorEl, setDemoAnchorEl] = useState(null);
     const [translateAnchorEl, setTranslateAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState('');
