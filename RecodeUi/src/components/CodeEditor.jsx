@@ -55,7 +55,7 @@ const CodeEditor = ({result, language}) => {
       <MonacoEditor
         height="100%"
         defaultLanguage={language}
-        defaultValue={result}
+        value={result}
         theme="vs-dark"
         options={{
           fontSize: 16,
