@@ -1,3 +1,20 @@
+## A Note for the Judges
+
+To simplify and enhance your testing experience for **Recode AI**, we have implemented the following:
+
+1. **Convenient Testing Command**: You can quickly deploy the project using the following command:
+   ```bash
+   docker-compose up -d
+   ```
+   This command will set up everything you need to run the project locally, minimizing setup time.
+
+2. **Temporary API Key**: To streamline the process, especially for the AI-enhanced code improvement features, we have included a **temporary API key** within the project. This ensures that you do not need to provide your own API key during the testing phase.
+
+3. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide.
+
+By providing these features, we aim to make the testing process as smooth, efficient, and enjoyable as possible. Thank you for evaluating **Recode AI**!
+
+
 # Recode AI: Turning Complexity Into Clarity
 
 Recode AI is a decompilation and analysis tool designed for developers, educators, cybersecurity experts, and enthusiasts. It leverages powerful Azure services and Ghidra to provide seamless binary decompilation, AI insights, and multi-language translation, all within a scalable and cost-effective serverless architecture.
@@ -46,7 +63,7 @@ By utilizing Azure to its fullest, Recode AI provides a cost-effective, high-per
 ### Instructions to Run RecodeAI Locally
 
 1. Update the `.env` file:  
-   Replace the following placeholder with your GPT API key:  
+   Replace the following placeholder with your GEMINI API key:  
    ```
    API_KEY=<your GEMINI API key>
    ```
@@ -58,6 +75,8 @@ By utilizing Azure to its fullest, Recode AI provides a cost-effective, high-per
 
 3. Navigate to the project directory and start the services:  
    ```bash
+   cd RecodeAI
+   
    docker-compose up -d
    ```
 
