@@ -38,6 +38,9 @@ Recode AI simplifies the process, making it accessible and efficient for everyon
 - **Beginner-Friendly Insights**: Provides context and clarity for those new to reverse engineering.
 
 ## Workflow
+
+![Description of Image](/RecodeUi/public/recodeArch.png)
+
 1. **Upload Your Binary**: Users upload .exe or .out files via the intuitive frontend.
 2. **Trigger Serverless Azure Function**: The binary is stored in Azure Blob Storage.
 3. **Run Ghidra in a Container**: Azure Container Instances (ACI) deploy a containerized Ghidra instance, paired with a lightweight Go server, to decompile the binary.
