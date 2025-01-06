@@ -35,7 +35,7 @@ By utilizing Azure to its fullest, Recode AI provides a cost-effective, high-per
 ## Tech Stack
 - **Frontend**: React, JavaScript, Vite.
 - **Backend**: Golang, Python, Ghidra (for decompiling the binaries), Docker.
-- **AI**: GPT-based insights for code transformation.
+- **AI**: Github Copilot, AI-based insights for code transformation.
 - **Cloud Services**:  
   - Azure Functions
   - Azure Container Instances (ACI)
@@ -48,7 +48,7 @@ By utilizing Azure to its fullest, Recode AI provides a cost-effective, high-per
 1. Update the `.env` file:  
    Replace the following placeholder with your GPT API key:  
    ```
-   API_KEY=<your GPT API key>
+   API_KEY=<your GEMINI API key>
    ```
 
 2. Clone the repository:  
@@ -82,7 +82,3 @@ The ability to decode and analyze binaries has implications for:
 - **Cybersecurity**: Faster malware analysis to mitigate threats.
 - **Education**: Tools for teaching reverse engineering to the next generation of developers.
 - **Legacy Software**: Breathing new life into outdated systems.
-
----
-For more details, check out our [GitHub Repository](#).
-
