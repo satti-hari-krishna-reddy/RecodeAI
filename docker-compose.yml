@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    image: docker.io/sattihari/ghidra_local:latest
+    container_name: ghidra_backend
+    environment:
+      - API_KEY=${API_KEY} 
+    ports:
+      - "5000:5000" 
+    networks:
+      - app-network
+
+  frontend:
+    image: docker.io/sattihari/recodeui:latest
+    container_name: recodeai_frontend
+    environment:
+      - BACKEND_URL=http://localhost:5000 
+    ports:
+      - "5173:80" 
+    depends_on:
+      - backend 
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
