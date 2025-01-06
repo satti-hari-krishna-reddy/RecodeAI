@@ -7,8 +7,7 @@ import CodeEditor from './components/CodeEditor';
 
 const App = () => {
     const [result, setResult] = useState(`// Start coding here\nfunction helloWorld() {\n    console.log("Hello, World!");\n}`);
-    const [language, setLanguage] = useState('javascript');
-    const [isCodeEditorVisible, setIsCodeEditorVisible] = useState(false); 
+    const [language, setLanguage] = useState('cpp');
 
     return (
         <Box
@@ -33,10 +32,9 @@ const App = () => {
                 result={result} 
                 setResult={setResult} 
                 setLanguage={setLanguage} 
-                setIsCodeEditorVisible={setIsCodeEditorVisible} 
             />
             
-            {isCodeEditorVisible && <CodeEditor result={result} language={language} />} 
+         <CodeEditor result={result} language={language} />
         </Box>
     );
 };
