@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import Header from './components/Header';
 import About from './components/About';
@@ -9,26 +8,36 @@ import CodeEditor from './components/CodeEditor';
 const App = () => {
     const [result, setResult] = useState(`// Start coding here\nfunction helloWorld() {\n    console.log("Hello, World!");\n}`);
     const [language, setLanguage] = useState('javascript');
+    const [isCodeEditorVisible, setIsCodeEditorVisible] = useState(false); 
+
     return (
-<Box
-    sx={{
-        minHeight: '100vh',
-        position: 'relative',
-        overflow: 'hidden',
-        color: 'white',
-        padding: '20px',
-        boxSizing: 'border-box',
-        background: 'linear-gradient(135deg, #ffafbd, #ffc3a0, #d5aaff, #a0c4ff, #8ecae6)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-    }}
->  <div style={{'display' : 'flex'}}>    <Header />
-<About /></div>
+        <Box
+            sx={{
+                minHeight: '100vh',
+                position: 'relative',
+                overflow: 'hidden',
+                color: 'white',
+                padding: '20px',
+                boxSizing: 'border-box',
+                background: 'linear-gradient(135deg, #ffafbd, #ffc3a0, #d5aaff, #a0c4ff, #8ecae6)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center center',
+            }}
+        >
+            <div style={{ display: 'flex' }}>
+                <Header />
+                <About />
+            </div>
 
-<ToolBar setResult={setResult} setLanguage={setLanguage}/>
-<CodeEditor result={result} language={language}/>
-</Box>
-
+            <ToolBar 
+                result={result} 
+                setResult={setResult} 
+                setLanguage={setLanguage} 
+                setIsCodeEditorVisible={setIsCodeEditorVisible} 
+            />
+            
+            {isCodeEditorVisible && <CodeEditor result={result} language={language} />} 
+        </Box>
     );
 };
 
