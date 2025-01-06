@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, Menu, MenuItem, CircularProgress, Snackbar, Alert } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
+const ToolBar = ({ result, setResult, setLanguage }) => {
     const [demoAnchorEl, setDemoAnchorEl] = useState(null);
     const [translateAnchorEl, setTranslateAnchorEl] = useState(null);
     const [activeButton, setActiveButton] = useState('');
@@ -22,7 +22,7 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
         setDemoAnchorEl(null);
         if (option) {
             setDemoButtonText(option);
-            setUploadedFile(option); 
+            downloadFile(option);
         }
     };
 
@@ -40,15 +40,16 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
             try {
                 const response = await fetch(backendUrl + '/translate', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({
                         pseudo_code: result,
                         method: 'translate',
                         lang: option,
                     }),
                 });
-                const data = await response.json();
-                setResult(data.translatedCode || 'Translation completed.');
+                const data = await response.text();
+                setResult(data || 'Translation completed.');
+                setLanguage(option);
             } catch (error) {
                 showSnackbarMessage('Translation failed. Please try again.');
             } finally {
@@ -57,6 +58,44 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
         }
     };
 
+
+    const downloadFile = (fileName) => {
+        const filePath = `/${fileName}`;
+      
+        fetch(filePath)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch the file.");
+            }
+            return response.blob(); 
+          })
+          .then((blob) => {
+            const file = new File([blob], fileName, { type: blob.type });
+            setUploadedFile(file); // Use the same format as handleFileUpload
+            showSnackbarMessage(`File "${fileName}" downloaded and set successfully.`);
+          })
+          .catch((error) => {
+            console.error("Error reading file:", error);
+            showSnackbarMessage("Failed to download the file.");
+          });
+      };
+      
+    function cleanCodeForJson(input) {
+        const mainStart = input.indexOf("// Function: main");
+        if (mainStart === -1) return ""; 
+        const codeBlock = input.slice(mainStart);
+      
+        const cleanedCode = codeBlock
+          .replace(/```[\s\S]*$/, "") 
+          .trim(); 
+      
+        const jsonSafeCode = cleanedCode
+          .replace(/\\/g, "\\\\")
+          .replace(/"/g, '\\"') 
+          .replace(/\n/g, "\\n");
+      
+        return jsonSafeCode;
+      }
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
@@ -80,7 +119,10 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
         showSnackbarMessage(`File "${file.name}" uploaded successfully.`);
     };
 
-    const handleMockApiCall = async (buttonKey) => {
+    const handleDecompile = async (buttonKey) => {
+        const formData = new FormData();
+        formData.append('file', uploadedFile);
+
         if (buttonKey === 'decode' && !uploadedFile) {
             showSnackbarMessage('Please upload a file or select a demo executable before decoding.');
             return;
@@ -92,32 +134,35 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
                 buttonKey === 'decode'
                     ? backendUrl + '/decompile'
                     : backendUrl + '/translate';
+            let code = result;
+            if (buttonKey === 'recode') {
+                 code = cleanCodeForJson(result);
+                 console.log(code);
+            }
 
-            const body =
-                buttonKey === 'decode'
-                    ? uploadedFile
-                    : JSON.stringify({
-                          pseudo_code: result,
-                          method: 'recode',
-                          lang: 'N/A',
-                      });
+            const body = JSON.stringify({
+                            pseudo_code: code,
+                            method: 'recode',
+                            lang: 'N/A',
+                        });
 
-            const headers = buttonKey === 'decode' ? {} : { 'Content-Type': 'application/json' };
+
+            const headers = buttonKey === 'decode' ? {} : { 'Content-Type': 'text/plain' };
             const options = {
                 method: 'POST',
                 headers,
-                body: buttonKey === 'decode' ? body : JSON.stringify(body),
+                body: buttonKey === 'decode' ? formData : body,
             };
 
             const response = await fetch(url, options);
-            const data = await response.json();
-
+            const data = await response.text();
             if (buttonKey === 'decode') {
-                setResult(data.decompiledCode || 'Decoding completed.');
+                setResult(data || 'Decoding completed.');
             } else {
-                setResult(data.reconstructedCode || 'Recode completed.');
+                setResult(data || 'Recode completed.');
             }
         } catch (error) {
+            console.log(error);
             showSnackbarMessage(`${buttonKey === 'decode' ? 'Decoding' : 'Recode'} failed. Please try again.`);
         } finally {
             setIsLoading((prev) => ({ ...prev, [buttonKey]: false }));
@@ -213,7 +258,7 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
                         backgroundColor: '#007BFF',
                         '&:hover': { backgroundColor: '#0056B3' },
                     }}
-                    onClick={() => handleMockApiCall('decode')}
+                    onClick={() => handleDecompile('decode')}
                 >
                     {isLoading.decode ? <CircularProgress size={20} sx={{ color: '#fff' }} /> : 'Decode'}
                 </Button>
@@ -227,7 +272,7 @@ const ToolBar = ({ result, setResult, setLanguage, isCodeEditorVisible }) => {
                         borderBottom: activeButton === 'reconstruct' ? '2px solid #000' : 'none',
                         '&:hover': { color: '#555' },
                     }}
-                    onClick={() => handleMockApiCall('recode')}
+                    onClick={() => handleDecompile('recode')}
                 >
                     {isLoading.recode ? <CircularProgress size={20} sx={{ color: '#000' }} /> : 'Recode'}
                 </Button>
