@@ -8,9 +8,11 @@ To simplify and enhance your testing experience for **Recode AI**, we have imple
    ```
    This command will set up everything you need to run the project locally, minimizing setup time.
 
-2. **Demo**: A demo binary executable (.exe) is already included, allowing you to test it without needing to provide one. You can select the file in the UI to perform the test.
+2. **Live Link**: A live version of the app is available here: https://recode-fz6oltg1b-satti-hari-krishna-reddys-projects.vercel.app
 
-3. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide.
+3. **Demo**: A demo binary executable (.exe) is already included, allowing you to test it without needing to provide one. You can select the file in the UI to perform the test.
+
+4. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide.
 
 By providing these features, we aim to make the testing process as smooth, efficient, and enjoyable as possible. Thank you for evaluating **Recode AI**!
 
