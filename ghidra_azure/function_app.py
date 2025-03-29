@@ -147,7 +147,7 @@ class ContainerOrchestrator:
             logger.error(f"Container cleanup failed: {str(e)}")
 
 class AIService:
-    GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+    GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
     def __init__(self):
         self.api_key = os.getenv("API_KEY")
@@ -155,14 +155,24 @@ class AIService:
             raise ValueError("API_KEY environment variable not set")
 
     def analyze_code(self, code: str) -> str:
-        prompt = f"""Analyze the following decompiled code and provide:
-        1. Function relationship map
-        2. Control flow analysis
-        3. Security observations
-        4. Inline documentation
-        
-        Code:
-        {code}"""
+        prompt = f"""1. Show the **decompiled code first** with inline comments explaining each part.
+                    - Do NOT modify or change the original structure or indentation.
+                    - Only add inline comments to improve understanding.
+                    - Do NOT add any headings, formatting, or unnecessary text.
+
+                    2. After the full decompiled code, add the **function relationship map**:
+                    - Function Name
+                    - Variables: List with brief roles.
+                    - Return Value: What it returns and why.
+                    - Relationships: Variable/function interactions (e.g., calls, return usage).
+
+                    3. **STRICT RULES:**
+                    - NO Markdown formatting (no bold, no italics, no code blocks).
+                    - NO explanations before or after the output.
+                    - NO extra commentary—just code first, then the function relationship map.
+
+                    Code:
+                    {code}"""
 
         try:
             response = requests.post(
