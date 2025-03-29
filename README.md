@@ -8,7 +8,7 @@ To simplify and enhance your testing experience for **Recode AI**, we have imple
    ```
    This command will set up everything you need to run the project locally, minimizing setup time.
 
-2. **Live Link**: A live version of the app is available here: https://recode-fz6oltg1b-satti-hari-krishna-reddys-projects.vercel.app
+2. **Live Link**: <a href="https://recode-fz6oltg1b-satti-hari-krishna-reddys-projects.vercel.app" target="_blank">🔗 Click here to view the live app</a>
 
 3. **Demo**: A demo binary executable (.exe) is already included, allowing you to test it without needing to provide one. You can select the file in the UI to perform the test.
 
