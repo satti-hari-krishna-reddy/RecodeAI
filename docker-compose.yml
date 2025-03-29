@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   backend:
     image: docker.io/sattihari/ghidra_local:latest
@@ -14,8 +13,6 @@ services:
   frontend:
     image: docker.io/sattihari/recodeui:latest
     container_name: recodeai_frontend
-    environment:
-      - BACKEND_URL=http://localhost:5000 
     ports:
       - "5173:80" 
     depends_on:
