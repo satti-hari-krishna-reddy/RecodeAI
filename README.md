@@ -21,7 +21,12 @@ By providing these features, we aim to make the testing process as smooth, effic
 
 Recode AI is a decompilation and analysis tool designed for developers, educators, cybersecurity experts, and enthusiasts. It leverages powerful Azure services and Ghidra to provide seamless binary decompilation, AI insights, and multi-language translation, all within a scalable and cost-effective serverless architecture.
 
+![Screenshot 2025-03-29 084438](https://github.com/user-attachments/assets/4843db9f-fa24-4f2c-821b-3311f1b14e3c)
+
+![Screenshot 2025-03-29 084518](https://github.com/user-attachments/assets/a26cc35e-b8e0-4fe9-8137-851722952f71)
+
 ## Problem We Solved
+
 Binary files often contain valuable information that developers and security analysts need to retrieve, analyze, or modify, but decompiled binary files are notoriously cryptic and difficult to interpret. Variables lack meaningful names, logic is convoluted, and understanding the code often feels like deciphering a foreign language. This complexity slows down even the most seasoned experts and creates a significant barrier for newcomers.
 
 **Recode AI** revolutionizes this process by leveraging AI to produce human-readable, well-documented source code from raw binaries. Whether you're:
