@@ -30,11 +30,14 @@ COPY --from=builder /app/ghidra-headless /app/ghidra-headless
 COPY --from=builder /app/ghidra_service /app/ghidra_service
 COPY --from=builder /app/binary /app/binary
 COPY --from=builder /app/MyProjDir /app/MyProjDir
-COPY .env /app/.env
+
 # Install Python runtime for Ghidra scripts
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Grant execute permissions recursively to all files in support
+RUN chmod -R +x /app/ghidra_10.1_PUBLIC/support
 
 EXPOSE 5000
 
