@@ -1,8 +1,8 @@
 version: '3.8'
 services:
   backend:
-    image: docker.io/sattihari/ghidra_local:latest
-    container_name: ghidra_backend
+    image: docker.io/sattihari/ghidra_backend:latest
+    container_name: ghidra_bc_container
     environment:
       - API_KEY=${API_KEY} 
     ports:
