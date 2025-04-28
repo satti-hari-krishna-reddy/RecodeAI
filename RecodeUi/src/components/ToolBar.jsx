@@ -141,7 +141,7 @@ const ToolBar = ({ result, setResult, setLanguage }) => {
             }
 
             const body = JSON.stringify({
-                            pseudo_code: code,
+                            pseudo_code: result,
                             method: 'recode',
                             lang: 'N/A',
                         });
