@@ -111,7 +111,22 @@ func decompileHandler(w http.ResponseWriter, r *http.Request) {
 
 	decompiledCode := getDecompiledOutput()
 
-	Prompt := "Generate a **function relationship map** for the given code with: \n 1. Function Name \n2. Variables: List with brief roles. \n 3. Return Value: What it returns and why. \n 4. Relationships:  Variable/function interactions (e.g., calls, return usage). \n **Rules**: No code modifications. \n then give some space in the bottom and in the next follow this by adding  inline comments or documentation for the following code. The comments should describe the purpose of each block of code or important lines. Do not modify the original structure or indentation of the code in any way. The goal is to improve understanding without altering the actual code.Please focus only on the code without any commentary "
+	Prompt := `1. Show the **decompiled code first** with inline comments explaining each part.
+   - Do NOT modify or change the original structure or indentation.
+   - Only add inline comments to improve understanding.
+   - Do NOT add any headings, formatting, or unnecessary text.
+
+2. After the full decompiled code, add the **function relationship map**:
+   - Function Name
+   - Variables: List with brief roles.
+   - Return Value: What it returns and why.
+   - Relationships: Variable/function interactions (e.g., calls, return usage).
+
+3. **STRICT RULES:**
+   - NO Markdown formatting (no bold, no italics, no code blocks).
+   - NO explanations before or after the output.
+   - NO extra commentary—just code first, then the function relationship map.
+ `
     aiInput := Prompt + "\n" + string(decompiledCode)
 	aiResponse, err := InvokeAi(aiInput)
 	
@@ -122,7 +137,7 @@ func decompileHandler(w http.ResponseWriter, r *http.Request) {
 
 func InvokeAi(prompt string) (string, error) {
 	apiKey := os.Getenv("API_KEY")
-	url := fmt.Sprintf("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=%s", apiKey)
+	url := fmt.Sprintf("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=%s", apiKey)
 
 	// Request payload
 	payload := map[string]interface{}{
@@ -252,8 +267,8 @@ func main() {
 	r := mux.NewRouter()
 
 	// Register your routes
-	r.HandleFunc("/decompile", decompileHandler).Methods(http.MethodPost)
-	r.HandleFunc("/translate", TranslationHandler).Methods(http.MethodPost)
+	r.HandleFunc("/api/decompile", decompileHandler).Methods(http.MethodPost)
+	r.HandleFunc("/api/translate", TranslationHandler).Methods(http.MethodPost)
 
 	// Set up CORS
 	corsHandler := setupCors()

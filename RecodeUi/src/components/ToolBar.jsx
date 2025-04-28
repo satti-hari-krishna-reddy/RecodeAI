@@ -38,7 +38,7 @@ const ToolBar = ({ result, setResult, setLanguage }) => {
             }
             setIsLoading((prev) => ({ ...prev, translate: true }));
             try {
-                const response = await fetch(backendUrl + '/translate', {
+                const response = await fetch(backendUrl + '/api/translate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({
@@ -132,8 +132,8 @@ const ToolBar = ({ result, setResult, setLanguage }) => {
         try {
             const url =
                 buttonKey === 'decode'
-                    ? backendUrl + '/decompile'
-                    : backendUrl + '/translate';
+                    ? backendUrl + '/api/decompile'
+                    : backendUrl + '/api/translate';
             let code = result;
             if (buttonKey === 'recode') {
                  code = cleanCodeForJson(result);

@@ -8,11 +8,9 @@ To simplify and enhance your testing experience for **Recode AI**, we have imple
    ```
    This command will set up everything you need to run the project locally, minimizing setup time.
 
-2. **Temporary API Key**: To streamline the process, especially for the AI-enhanced code improvement features, we have included a **temporary API key** within the project. This ensures that you do not need to provide your own API key during the testing phase.
+2. **Demo**: A demo binary executable (.exe) is already included, allowing you to test it without needing to provide one. You can select the file in the UI to perform the test.
 
-3. **Demo**: A demo binary executable (.exe) is already included, allowing you to test it without needing to provide one. You can select the file in the UI to perform the test.
-
-4. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide.
+3. **Comprehensive Setup Instructions**: Detailed instructions on how to set up and test the project locally are included in the [Testing Instructions](#Testing-Instructions-for-the-Judges) section of this README. Please refer to it for a step-by-step guide, Watch the [demo video](https://youtu.be/KlkTiKta_hE).
 
 By providing these features, we aim to make the testing process as smooth, efficient, and enjoyable as possible. Thank you for evaluating **Recode AI**!
 
@@ -21,7 +19,12 @@ By providing these features, we aim to make the testing process as smooth, effic
 
 Recode AI is a decompilation and analysis tool designed for developers, educators, cybersecurity experts, and enthusiasts. It leverages powerful Azure services and Ghidra to provide seamless binary decompilation, AI insights, and multi-language translation, all within a scalable and cost-effective serverless architecture.
 
+![Screenshot 2025-03-29 084438](https://github.com/user-attachments/assets/4843db9f-fa24-4f2c-821b-3311f1b14e3c)
+
+![Screenshot 2025-03-29 084518](https://github.com/user-attachments/assets/a26cc35e-b8e0-4fe9-8137-851722952f71)
+
 ## Problem We Solved
+
 Binary files often contain valuable information that developers and security analysts need to retrieve, analyze, or modify, but decompiled binary files are notoriously cryptic and difficult to interpret. Variables lack meaningful names, logic is convoluted, and understanding the code often feels like deciphering a foreign language. This complexity slows down even the most seasoned experts and creates a significant barrier for newcomers.
 
 **Recode AI** revolutionizes this process by leveraging AI to produce human-readable, well-documented source code from raw binaries. Whether you're:
