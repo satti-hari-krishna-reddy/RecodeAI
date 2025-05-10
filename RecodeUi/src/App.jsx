@@ -57,7 +57,7 @@ const App = () => {
                     }}
                 >
                     <span style={{ fontWeight: 'bold' }}>
-                        ⚠️ Server is initializing! Responses may take up to 80 seconds...
+                      ⚠️ Resource limits in effect, so responses may be delayed by up to 80 seconds.
                     </span>
                     <span 
                         onClick={handleCloseAlert}
